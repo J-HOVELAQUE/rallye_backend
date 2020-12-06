@@ -1,0 +1,34 @@
+{
+  "name": "template-backend",
+  "version": "1.0.0",
+  "description": "template-backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:watch": "nodemon",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J-HOVELAQUE/template-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/J-HOVELAQUE/template-backend/issues"
+  },
+  "homepage": "https://github.com/J-HOVELAQUE/template-backend#readme",
+  "dependencies": {
+    "config": "^3.3.3",
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "mongoose": "^5.11.4",
+    "morgan": "^1.10.0",
+    "socket.io": "^3.0.3",
+    "socket.io-client": "^3.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.15.0"
+  }
+}
