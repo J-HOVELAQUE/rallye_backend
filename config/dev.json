@@ -5,7 +5,7 @@
     "database": {
         "user": "rally",
         "password": "upTheIron",
-        "dbName": "test-rally"
+        "dbName": "dev-rally"
     },
-    "environement": "test"
+    "environement": "dev"
 }

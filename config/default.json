@@ -6,5 +6,6 @@
         "user": "julien",
         "password": "julien",
         "dbName": "dev"
-    }
+    },
+    "environement": "dev"
 }
