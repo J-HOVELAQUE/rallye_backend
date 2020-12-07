@@ -1,4 +1,5 @@
 const UserModel = require('../db/models/user');
+const uid2 = require('uid2');
 
 async function signUp(req, res) {
 
@@ -7,7 +8,7 @@ async function signUp(req, res) {
         name: req.body.mail,
         email: req.body.email,
         password: req.body.password,
-        token: req.body.token,
+        token: uid2(32),
         status: req.body.status,
         salt: req.body.salt,
         avatar: req.body.avatar
