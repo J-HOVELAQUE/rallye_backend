@@ -4,8 +4,6 @@ var encBase64 = require("crypto-js/enc-base64");
 
 async function signIn(req, res) {
 
-  console.log('query', req.body)
-
   var result = false;
   var user = null;
   var error = [];
@@ -20,14 +18,14 @@ async function signIn(req, res) {
   }
 
   if (error.length == 0) {
-    console.log('query2', req.body.email)
+
     user = await UserModel.findOne({
       email: req.body.email
     });
-    console.log('USER', user)
+
     var hash = SHA256(req.body.password + user.salt).toString(encBase64);
 
-    console.log(hash, user.password)
+
     if (hash === user.password) {
       result = true
       token = user.token
