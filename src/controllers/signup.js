@@ -8,25 +8,33 @@ const UserModel = require('../db/models/user');
 async function signUp(req, res) {
 
     const salt = uid2(32);
+    let userSaved;
+    const errorArray = [];
 
-    console.log('BODY', req.body);
+    try {
+        const newUser = new UserModel({
+            firstname: req.body.firstname,
+            name: req.body.name,
+            email: req.body.email,
+            password: SHA256(req.body.password + salt).toString(encBase64),
+            token: uid2(32),
+            status: req.body.status,
+            salt: salt,
+            avatar: req.body.avatar
+        });
 
-    const newUser = new UserModel({
-        firstname: req.body.firstname,
-        name: req.body.name,
-        email: req.body.email,
-        password: SHA256(req.body.password + salt).toString(encBase64),
-        token: uid2(32),
-        status: req.body.status,
-        salt: salt,
-        avatar: req.body.avatar
-    });
-
-    const userSaved = await newUser.save();
+        userSaved = await newUser.save();
+    } catch (error) {
+        console.log('ERREUR', error.code);
+        if (error.code === 11000) {
+            errorArray.push("email existant");
+        }
+    }
 
     res.json({
         message: "ok",
-        data: userSaved
+        data: userSaved,
+        error: errorArray
     })
 }
 
