@@ -1,4 +1,4 @@
-router.post('/sign-in', async function (req, res, next) {
+async function signIn(req, res) {
 
     var result = false
     var user = null
@@ -31,4 +31,6 @@ router.post('/sign-in', async function (req, res, next) {
       error,
       token
     })
-  })
+  }
+
+  module.exports = signIn;
