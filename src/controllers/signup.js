@@ -1,15 +1,24 @@
+const uid2 = require('uid2');
+const SHA256 = require("crypto-js/sha256");
+var encBase64 = require("crypto-js/enc-base64");
+
 const UserModel = require('../db/models/user');
+
 
 async function signUp(req, res) {
 
+    const salt = uid2(32);
+
+    console.log('BODY', req.body);
+
     const newUser = new UserModel({
         firstname: req.body.firstname,
-        name: req.body.mail,
+        name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
-        token: req.body.token,
+        password: SHA256(req.body.password + salt).toString(encBase64),
+        token: uid2(32),
         status: req.body.status,
-        salt: req.body.salt,
+        salt: salt,
         avatar: req.body.avatar
     });
 
