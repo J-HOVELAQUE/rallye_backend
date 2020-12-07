@@ -1,0 +1,11 @@
+{
+    "app": {
+        "port": 3000
+    },
+    "database": {
+        "user": "MONGODB_USER",
+        "password": "MONGODB_PASS",
+        "dbName": "DB_NAME"
+    },
+    "environement": "prod"
+}

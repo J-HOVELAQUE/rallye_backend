@@ -1,5 +1,4 @@
 const userModel = require('../db/models/user');
-const uid2 = require('uid2');
 const SHA256 = require("crypto-js/sha256");
 var encBase64 = require("crypto-js/enc-base64");
 
