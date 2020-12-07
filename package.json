@@ -28,7 +28,8 @@
     "mongoose": "^5.11.4",
     "morgan": "^1.10.0",
     "socket.io": "^3.0.3",
-    "socket.io-client": "^3.0.3"
+    "socket.io-client": "^3.0.3",
+    "supertest": "^6.0.1"
   },
   "devDependencies": {
     "eslint": "^7.15.0"
