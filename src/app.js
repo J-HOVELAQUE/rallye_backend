@@ -24,6 +24,7 @@ function buildApp() {
 
     // Routers
     app.use('/', router);
+    app.use('/user', router);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
