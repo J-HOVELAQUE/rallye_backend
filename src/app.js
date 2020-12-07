@@ -3,7 +3,8 @@ const morgan = require('morgan');
 const http = require('http');
 const createError = require('http-errors');
 
-const router = require('./routers');
+const indexRouter = require('./routers/index');
+const userRouter = require('./routers/user');
 const createSocketServer = require('./socketServer');
 
 function buildApp() {
@@ -23,8 +24,8 @@ function buildApp() {
     })
 
     // Routers
-    app.use('/', router);
-    app.use('/user', router);
+    app.use('/', indexRouter);
+    app.use('/user', userRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

@@ -9,9 +9,11 @@ async function signUp(req, res) {
 
     const salt = uid2(32);
 
+    console.log('BODY', req.body);
+
     const newUser = new UserModel({
         firstname: req.body.firstname,
-        name: req.body.mail,
+        name: req.body.name,
         email: req.body.email,
         password: SHA256(req.body.password + salt).toString(encBase64),
         token: uid2(32),
