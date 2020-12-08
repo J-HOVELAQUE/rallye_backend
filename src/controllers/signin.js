@@ -61,19 +61,18 @@ async function signIn(req, res) {
         answer.token = user.token;
         answer.status = user.status
       } else {
-        errorArray.push('email ou mot de passe incorrect')
+        errorArray.push('wrong password')
       }
 
     } else {
-      errorArray.push("Email inexistant")
+      errorArray.push("inexisting email")
     }
-
-    res.json({
-      result,
-      data: answer,
-      error: errorArray,
-    })
   }
+  res.json({
+    result,
+    data: answer,
+    error: errorArray,
+  })
 }
 
 module.exports = signIn;
