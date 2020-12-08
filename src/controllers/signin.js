@@ -23,6 +23,11 @@ async function signIn(req, res) {
   const errorArray = [];
   let token;
 
+  const answer = {
+    token: null,
+    status: null
+  }
+
   ////// Validation payload //////
 
   const { error } = schemaPayload.validate(req.body,
@@ -52,8 +57,9 @@ async function signIn(req, res) {
     ///// Testing password /////
 
     if (hash === user.password) {
-      result = true
-      token = user.token
+      result = true;
+      answer.token = user.token;
+      answer.status = user.status
     } else {
       errorArray.push('email ou mot de passe incorrect')
     }
@@ -61,10 +67,7 @@ async function signIn(req, res) {
   }
   res.json({
     result,
-    data: {
-      token: token,
-      status: user.status
-    },
+    data: answer,
     error: errorArray,
   })
 }
