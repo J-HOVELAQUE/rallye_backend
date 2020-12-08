@@ -1,8 +1,25 @@
 const uid2 = require('uid2');
 const SHA256 = require("crypto-js/sha256");
 var encBase64 = require("crypto-js/enc-base64");
+const Joi = require('joi');
 
 const UserModel = require('../db/models/user');
+
+const schemaPayload = Joi.object({
+    firstname: Joi.string(),
+
+    name: Joi.string()
+        .required(),
+
+    password: Joi.string()
+        .min(3)
+        .max(30)
+        .required(),
+
+    email: Joi.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+        .required
+})
 
 
 async function signUp(req, res) {
