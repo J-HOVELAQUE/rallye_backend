@@ -61,7 +61,10 @@ async function signIn(req, res) {
   }
   res.json({
     result,
-    data: { token: token },
+    data: {
+      token: token,
+      status: user.status
+    },
     error: errorArray,
   })
 }
