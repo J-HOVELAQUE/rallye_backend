@@ -29,14 +29,14 @@ async function signUp(req, res) {
     const errorArray = [];
     let recorded = false;
 
+    ///// Validation payload /////
+
     const { error } = schemaPayload.validate(req.body,
         { abortEarly: false });
 
     console.log('ERREUR', error);
 
     try {
-
-
         const answerJoi = error.details;
 
         answerJoi.forEach(element => {
@@ -46,18 +46,8 @@ async function signUp(req, res) {
         console.log(error);
     }
 
+    ///// Process if payload is ok //////
 
-    // if (req.body.name === undefined || req.body.name === null) {
-    //     errorArray.push("champ requis name vide")
-    // }
-
-    // if (req.body.email === undefined || req.body.email === null) {
-    //     errorArray.push("champ requis email vide")
-    // }
-
-    // if (req.body.password === undefined || req.body.password === null) {
-    //     errorArray.push("champ requis password vide")
-    // }
     if (errorArray.length === 0) {
         try {
             const newUser = new UserModel({

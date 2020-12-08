@@ -1,23 +1,46 @@
 const UserModel = require('../db/models/user');
 const SHA256 = require("crypto-js/sha256");
-var encBase64 = require("crypto-js/enc-base64");
+const encBase64 = require("crypto-js/enc-base64");
+const Joi = require('joi');
+
+const schemaPayload = Joi.object({
+
+  password: Joi.string()
+    .min(3)
+    .max(30)
+    .required(),
+
+  email: Joi.string()
+    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    .required()
+})
+
 
 async function signIn(req, res) {
 
-  var result = false;
-  var user = null;
-  var error = [];
+  let result = false;
+  let user = null;
+  const errorArray = [];
   let token;
 
-  if (req.body.email == '' ||
-    req.body.password == '' ||
-    req.body.password === undefined ||
-    req.body.email === undefined
-  ) {
-    error.push('champs vides')
+  ////// Validation payload //////
+
+  const { error } = schemaPayload.validate(req.body,
+    { abortEarly: false });
+
+  console.log('ERREURS', error);
+
+  if (error !== undefined) {
+    const answerJoi = error.details;
+
+    answerJoi.forEach(element => {
+      errorArray.push(element.message)
+    });
   }
 
-  if (error.length == 0) {
+  ///// Process if payload ok /////
+
+  if (errorArray.length == 0) {
 
     user = await UserModel.findOne({
       email: req.body.email
@@ -26,19 +49,20 @@ async function signIn(req, res) {
     var hash = SHA256(req.body.password + user.salt).toString(encBase64);
 
 
+    ///// Testing password /////
+
     if (hash === user.password) {
       result = true
       token = user.token
     } else {
-      error.push('email ou mot de passe incorrect')
+      errorArray.push('email ou mot de passe incorrect')
     }
 
   }
   res.json({
     result,
-    user,
-    error,
-    token
+    data: { token: token },
+    error: errorArray,
   })
 }
 
