@@ -51,25 +51,30 @@ async function signIn(req, res) {
       email: req.body.email
     });
 
-    var hash = SHA256(req.body.password + user.salt).toString(encBase64);
+    if (user) {
+      var hash = SHA256(req.body.password + user.salt).toString(encBase64);
 
 
-    ///// Testing password /////
+      ///// Testing password /////
 
-    if (hash === user.password) {
-      result = true;
-      answer.token = user.token;
-      answer.status = user.status
+      if (hash === user.password) {
+        result = true;
+        answer.token = user.token;
+        answer.status = user.status
+      } else {
+        errorArray.push('email ou mot de passe incorrect')
+      }
+
     } else {
-      errorArray.push('email ou mot de passe incorrect')
+      errorArray.push("Email inexistant")
     }
 
+    res.json({
+      result,
+      data: answer,
+      error: errorArray,
+    })
   }
-  res.json({
-    result,
-    data: answer,
-    error: errorArray,
-  })
 }
 
 module.exports = signIn;
