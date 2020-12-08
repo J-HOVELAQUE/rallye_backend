@@ -21,7 +21,6 @@ async function signIn(req, res) {
   let result = false;
   let user = null;
   const errorArray = [];
-  let token;
 
   const answer = {
     token: null,
