@@ -2,6 +2,7 @@
 
 function transmitVehiculePosition(req, res) {
     console.log('POSITION', req.body);
+    req.dependencies.socketServer.emit('sendPositionToAll', { positions: req.body });
     res.json(req.body)
 }
 
