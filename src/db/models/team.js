@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const teamSchema = mongoose.Schema({
-    pilot_1: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
-    pilot_2: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    pilot_1: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    pilot_2: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
     car_id: String,
-    car: { type: mongoose.Schema.Types.ObjectId, ref: 'car' },
+    car: { type: mongoose.Schema.Types.ObjectId, ref: 'cars' },
     category: String,
     grid: Number
 })
