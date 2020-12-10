@@ -6,7 +6,9 @@ const createError = require('http-errors');
 const indexRouter = require('./routers/index');
 const userRouter = require('./routers/user');
 const mapRouter = require('./routers/map');
+const adminRouter = require('./routers/admin');
 const createSocketServer = require('./socketServer');
+
 
 function buildApp() {
     const app = express();
@@ -28,6 +30,7 @@ function buildApp() {
     app.use('/', indexRouter);
     app.use('/user', userRouter);
     app.use('/map', mapRouter);
+    app.use('/admin', adminRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
