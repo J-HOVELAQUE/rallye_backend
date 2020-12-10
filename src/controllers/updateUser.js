@@ -1,20 +1,23 @@
 const UserModel = require('../db/models/user');
-const { put } = require('../routers/user');
 
 async function updateUser(req, res) {
 
-    // sur un put
-    console.log('QUERY', req.body.token)
-    console.log('UPDATE', req.body.keyToUpdate)
-    console.log('UPDATE', req.body.newValue)
+    let result = false
+    var update = { [req.body.keyToUpdate]: req.body.newValue }
 
-    // console.log('QUERY', req.query.token);
-    // const answerDb = await UserModel.findOne({ token: req.query.token });
-    // console.log('USER', answerDb);
+    const updateDb = await UserModel.updateOne(
+        {
+            token: req.body.token
+        }, update
+    )
+    if (updateDb.nModified === 1) {
+        result = true
+    }
 
-    // res.json({
-    //     user: answerDb
-    // })
+    // Retrieve user updated
+    const answerDb = await UserModel.findOne({ token: req.body.token });
+
+    res.json({ result, user: answerDb })
 }
 
 module.exports = updateUser;
