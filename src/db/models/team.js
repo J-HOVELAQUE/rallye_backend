@@ -6,8 +6,8 @@ const teamSchema = mongoose.Schema({
     car_id: String,
     car: { type: mongoose.Schema.Types.ObjectId, ref: 'car' },
     category: String,
-    grid: Number,
-    
+    grid: Number
+})
 
 const TeamModel = mongoose.model('team', teamSchema);
 
