@@ -21,13 +21,14 @@ const userSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['fan', 'pilot', 'admin']
+        enum: ['fan', 'pilot', 'admin'],
+        required: true,
     },
     salt: {
         type: String,
         required: true,
     },
-    favorite: Array,
+    favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: 'teams' }],
     nationality: String,
     avatar: String
 });
