@@ -1,0 +1,11 @@
+{
+    "app": {
+        "port": "PORT"
+    },
+    "database": {
+        "user": "DB_USER",
+        "password": "DB_PASSWORD",
+        "dbName": "DB_NAME"
+    },
+    "environement": "prod"
+}

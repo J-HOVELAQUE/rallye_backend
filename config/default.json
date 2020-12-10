@@ -3,9 +3,9 @@
         "port": 3000
     },
     "database": {
-        "user": "julien",
-        "password": "julien",
-        "dbName": "dev"
+        "user": "rally",
+        "password": "upTheIron",
+        "dbName": "dev-rally"
     },
-    "environement": "dev"
+    "environement": "default"
 }
