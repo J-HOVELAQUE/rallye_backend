@@ -8,7 +8,8 @@
     "start:watch": "nodemon",
     "lint": "eslint .",
     "test": "set NODE_ENV=test&& node index.js",
-    "dev": "set NODE_ENV=dev&& node ./bin/www"
+    "dev": "set NODE_ENV=dev&& node index.js",
+    "prod": "set NODE_ENV=prod&& node index.js"
   },
   "repository": {
     "type": "git",

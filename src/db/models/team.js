@@ -9,6 +9,6 @@ const teamSchema = mongoose.Schema({
     grid: Number
 })
 
-const TeamModel = mongoose.model('team', teamSchema);
+const TeamModel = mongoose.model('teams', teamSchema);
 
 module.exports = TeamModel;
