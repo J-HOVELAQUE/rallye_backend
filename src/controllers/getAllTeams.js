@@ -1,7 +1,7 @@
 
 const TeamModel = require('../db/models/team');
 
-async function getUser(req, res) {
+async function getAllTeams(req, res) {
 
     const teams = await TeamModel.find()
         .populate('pilot_1')
@@ -13,4 +13,4 @@ async function getUser(req, res) {
     res.json({ teams: teams })
 }
 
-module.exports = getUser;
+module.exports = getAllTeams;
