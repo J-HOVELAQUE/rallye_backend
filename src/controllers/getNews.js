@@ -1,15 +1,8 @@
 const NewsModel = require('../db/models/news');
 
 async function getNews(req, res) {
-    const newsDb = await NewsModel({ 
-        title: req.query.title,
-        image: req.query.image,
-        description: req.query.description,
-        date: req.query.date,
-    });
-
+    const newsDb = await NewsModel.find()
     console.log('LES NEWS', newsDb);
-
     res.json({ news: newsDb })
 }
 
