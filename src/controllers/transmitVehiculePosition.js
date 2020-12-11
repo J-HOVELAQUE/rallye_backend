@@ -7,7 +7,10 @@ async function transmitVehiculePosition(req, res) {
     let alreadyRecorded = false;
     for (let i = 0; i < allPosition.length; i++) {
         if (allPosition[i].idVehicule === req.body.idVehicule) {
-            allPosition[i] = req.body;
+            allPosition[i].lat = req.body.lat;
+            allPosition[i].long = req.body.long;
+
+
             alreadyRecorded = true;
         }
     }
@@ -16,7 +19,6 @@ async function transmitVehiculePosition(req, res) {
 
         const findedCar = await TeamModel.findOne({ car_id: parseInt(req.body.idVehicule, 10) });
 
-        console.log('CAR>>>>>>>>>>>>>>>', parseInt(req.body.idVehicule, 10));
         if (findedCar.category === "G/H/I") {
             newCar.color = "black"
         } else {
@@ -26,7 +28,7 @@ async function transmitVehiculePosition(req, res) {
         allPosition.push(newCar)
     }
     req.dependencies.socketServer.emit('sendPositionToAll', { allPosition });
-    console.log(req.body);
+    console.log(allPosition);
     res.json(req.body)
 }
 
