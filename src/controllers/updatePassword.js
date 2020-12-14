@@ -1,19 +1,18 @@
 const UserModel = require('../db/models/user');
+var encBase64 = require("crypto-js/enc-base64");
+const uid2 = require('uid2');
+const SHA256 = require("crypto-js/sha256");
 
 async function updateUser(req, res) {
 
     let result = false
-    // var update = { [req.body.keyToUpdate]: req.body.newValue }
-    let jsonFields = JSON.parse(req.body.newValue)
+    const salt = uid2(32);
 
-    var update = {
-        firstname: jsonFields.userFirstName,
-        name: jsonFields.userLastName,
-        email: jsonFields.userEmail,
-        avatar: jsonFields.userAvatar,
-        nationality: jsonFields.userNationality
+    var update = { 
+        salt: salt,
+        password: SHA256(req.body.newValue + salt).toString(encBase64)
     }
-
+   
     const updateDb = await UserModel.updateOne(
         {
             token: req.body.token

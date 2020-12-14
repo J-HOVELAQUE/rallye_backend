@@ -8,6 +8,7 @@ const updateUser = require('../controllers/updateUser');
 const addFavorite = require('../controllers/addFavorite');
 const removeFavorite = require('../controllers/removeFavorite');
 const getInfo = require('../controllers/getInfo');
+const updatePassword = require('../controllers/updatePassword');
 
 router.post('/sign-up', signUp);
 router.post('/sign-in', signIn);
@@ -16,6 +17,7 @@ router.get('/get-user', getUser);
 router.put('/update-user', updateUser);
 router.put('/add-favorite', addFavorite);
 router.put('/remove-favorite', removeFavorite);
+router.put('/update-password', updatePassword);
 
 router.get('/get-info', getInfo);
 
