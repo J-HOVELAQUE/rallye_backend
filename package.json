@@ -8,7 +8,8 @@
     "start:watch": "nodemon",
     "lint": "eslint .",
     "test": "set NODE_ENV=test&& node index.js",
-    "dev": "set NODE_ENV=dev&& node ./bin/www"
+    "dev": "set NODE_ENV=dev&& node ./bin/www",
+    "prod": "set NODE_ENV=prod&& node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "bugs": {
     "url": "https://github.com/J-HOVELAQUE/template-backend/issues"
   },
+
   "homepage": "https://github.com/J-HOVELAQUE/template-backend#readme",
   "dependencies": {
     "config": "^3.3.3",
