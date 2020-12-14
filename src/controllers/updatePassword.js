@@ -3,7 +3,7 @@ var encBase64 = require("crypto-js/enc-base64");
 const uid2 = require('uid2');
 const SHA256 = require("crypto-js/sha256");
 
-async function updateUser(req, res) {
+async function updatePassword(req, res) {
 
     let result = false
     const salt = uid2(32);
@@ -29,4 +29,4 @@ async function updateUser(req, res) {
     res.json({ result, user: answerDb })
 }
 
-module.exports = updateUser;
+module.exports = updatePassword;
