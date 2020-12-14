@@ -20,7 +20,7 @@ async function transmitVehiculePosition(req, res) {
         const findedCar = await TeamModel.findOne({ car_id: parseInt(req.body.idVehicule, 10) });
 
         if (findedCar.category === "G/H/I") {
-            newCar.color = "black"
+            newCar.color = "blue"
         } else {
             newCar.color = "red"
         }
