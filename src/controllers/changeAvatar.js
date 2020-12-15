@@ -4,9 +4,8 @@ const config = require('config');
 const fs = require('fs');
 const uniquid = require('uniqid');
 
-
-
-
+const getIdWithToken = require('../tools/getIdWithToken');
+const UserModel = require('../db/models/user');
 
 
 cloudinary.config({
@@ -18,16 +17,22 @@ cloudinary.config({
 
 async function changeAvatar(req, res) {
 
-    console.log('DATA', req.files);
+    const idUser = await getIdWithToken(req.query.token);
+
+
+    // console.log('DATA', req.files);
+    // console.log('TOKEN', req.query.token);
 
     const imagePath = './tmp/' + uniquid() + '.jpg';
     const resultCopy = await req.files.avatar.mv(imagePath);
     const resultCloudinary = await cloudinary.uploader.upload(imagePath);
 
-    console.log('Result CLOUD', resultCloudinary);
+    await UserModel.updateOne({ token: req.query.token }, { avatar: resultCloudinary.secure_url })
+
+    // console.log('Result CLOUD', resultCloudinary);
 
     if (!resultCopy) {
-        res.json({ result: true, message: 'File uploaded!', info: resultCloudinary });
+        res.json({ result: true, message: 'File uploaded!', avatar_url: resultCloudinary.secure_url });
     } else {
         res.json({ result: false, message: resultCopy });
     }
