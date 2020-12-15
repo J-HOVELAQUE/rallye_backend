@@ -10,6 +10,7 @@ const mapRouter = require('./routers/map');
 const adminRouter = require('./routers/admin');
 const teamsRouter = require('./routers/teams');
 const newsRouter = require('./routers/news');
+const resultsRouter = require('./routers/results');
 const programRouter = require('./routers/programs');
 const chatRouter = require('./routers/chat');
 
@@ -41,6 +42,7 @@ function buildApp() {
     app.use('/admin', adminRouter);
     app.use('/teams', teamsRouter);
     app.use('/news', newsRouter);
+    app.use('/results', resultsRouter);
     app.use('/program', programRouter);
     app.use('/chat', chatRouter);
 
