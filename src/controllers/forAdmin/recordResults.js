@@ -4,7 +4,10 @@ async function recordResults(req, res) {
 
     const newResult = new ResultModel({
         team_id: req.body.team_id,
-        timings: req.body.timings,
+        position: req.body.position,
+        time: req.body.time,
+        diff: req.body.diff,
+        date: req.body.date
     });
 
     const resultSaved = await newResult.save();
