@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const http = require('http');
 const createError = require('http-errors');
+const fileUpload = require('express-fileupload');
 
 const indexRouter = require('./routers/index');
 const userRouter = require('./routers/user');
@@ -24,6 +25,7 @@ function buildApp() {
 
     // Middlewares
     app.use(morgan('dev'));
+    app.use(fileUpload());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use((req, res, next) => {
