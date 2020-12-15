@@ -12,9 +12,6 @@ async function signUp(req, res) {
 
     let recorded = false;
 
-
-
-
     const newUser = new UserModel({
         firstname: req.body.firstname,
         name: req.body.name,

@@ -12,38 +12,49 @@ async function getUserByStatus(req, res) {
         .exec();
 
     // const pilotData = await UserModel.find({ status: "pilot" });
-    const pilots = teams.map(team => {
-        return {
-            team: team._id,
+    const pilots = [];
+
+    teams.forEach(team => {
+        pilots.push({
+            team: team.car_id,
             name: team.pilot_1.name,
             firstname: team.pilot_1.firstname,
             _id: team.pilot_1._id
-        },
-        {
-            team: team._id,
+        });
+        pilots.push({
+            team: team.car_id,
             name: team.pilot_2.name,
             firstname: team.pilot_2.firstname,
             _id: team.pilot_2._id
-        }
+        })
     });
 
-    // const pilots = pilotData.map(pilot => {
+    // const pilots = teams.map(team => {
     //     return {
-    //         _id: pilot._id,
-    //         name: pilot.name,
+    //         team: team._id,
+    //         name: team.pilot_1.name,
+    //         firstname: team.pilot_1.firstname,
+    //         _id: team.pilot_1._id
+    //     },
+    //     {
+    //         team: team._id,
+    //         name: team.pilot_2.name,
+    //         firstname: team.pilot_2.firstname,
+    //         _id: team.pilot_2._id
     //     }
-    // })
+    // });
 
-    // const adminData = await UserModel.find({ status: "admin" });
+    const adminData = await UserModel.find({ status: "admin" });
 
-    // const admins = adminData.map(admin => {
-    //     return {
-    //         _id: admin._id,
-    //         name: admin.name
-    //     }
-    // })
+    const admins = adminData.map(admin => {
+        return {
+            _id: admin._id,
+            name: admin.name,
+            firstname: admin.firstname
+        }
+    })
 
-    res.json({ pilots })
+    res.json({ pilots, admins })
 }
 
 module.exports = getUserByStatus;
