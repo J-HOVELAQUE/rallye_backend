@@ -10,6 +10,7 @@ const adminRouter = require('./routers/admin');
 const teamsRouter = require('./routers/teams');
 const newsRouter = require('./routers/news');
 const resultsRouter = require('./routers/results');
+const programRouter = require('./routers/programs');
 
 
 const createSocketServer = require('./socketServer');
@@ -39,6 +40,7 @@ function buildApp() {
     app.use('/teams', teamsRouter);
     app.use('/news', newsRouter);
     app.use('/results', resultsRouter);
+    app.use('/program', programRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

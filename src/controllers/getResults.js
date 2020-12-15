@@ -1,5 +1,5 @@
 
-const ResultModel = require('../db/models/results');
+const ResultModel = require('../db/models/result');
 
 async function getResults(req, res) {
 
