@@ -7,13 +7,16 @@ const getUser = require('../controllers/getUser');
 const updateUser = require('../controllers/updateUser');
 const addFavorite = require('../controllers/addFavorite');
 const removeFavorite = require('../controllers/removeFavorite');
+const getInfo = require('../controllers/getInfo');
 
 router.post('/sign-up', signUp);
 router.post('/sign-in', signIn);
 
 router.get('/get-user', getUser);
-router.put('/update-user', updateUser)
-router.put('/add-favorite', addFavorite)
-router.put('/remove-favorite', removeFavorite)
+router.put('/update-user', updateUser);
+router.put('/add-favorite', addFavorite);
+router.put('/remove-favorite', removeFavorite);
+
+router.get('/get-info', getInfo);
 
 module.exports = router;
