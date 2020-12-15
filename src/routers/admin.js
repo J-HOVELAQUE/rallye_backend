@@ -8,6 +8,8 @@ const recordAccomodation = require('../controllers/forAdmin/recordAccomodation')
 const recordCatering = require('../controllers/forAdmin/recordCatering');
 const recordNews = require('../controllers/forAdmin/recordNews');
 const recordChat = require('../controllers/forAdmin/recordChat')
+const recordProgram = require('../controllers/forAdmin/recordProgram');
+const recordResults = require('../controllers/forAdmin/recordResults');
 
 router.post('/team', recordTeam);
 router.post('/car', recordCar);
@@ -16,5 +18,7 @@ router.post('/accomodation', recordAccomodation);
 router.post('/catering', recordCatering);
 router.post('/news', recordNews);
 router.post('/chat', recordChat);
+router.post('/program', recordProgram);
+router.post('/results', recordResults);
 
 module.exports = router;

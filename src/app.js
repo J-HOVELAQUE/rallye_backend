@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const http = require('http');
 const createError = require('http-errors');
+const fileUpload = require('express-fileupload');
 
 const indexRouter = require('./routers/index');
 const userRouter = require('./routers/user');
@@ -9,6 +10,9 @@ const mapRouter = require('./routers/map');
 const adminRouter = require('./routers/admin');
 const teamsRouter = require('./routers/teams');
 const newsRouter = require('./routers/news');
+const resultsRouter = require('./routers/results');
+const programRouter = require('./routers/programs');
+const chatRouter = require('./routers/chat');
 
 
 const createSocketServer = require('./socketServer');
@@ -23,6 +27,7 @@ function buildApp() {
 
     // Middlewares
     app.use(morgan('dev'));
+    app.use(fileUpload());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use((req, res, next) => {
@@ -37,6 +42,9 @@ function buildApp() {
     app.use('/admin', adminRouter);
     app.use('/teams', teamsRouter);
     app.use('/news', newsRouter);
+    app.use('/results', resultsRouter);
+    app.use('/program', programRouter);
+    app.use('/chat', chatRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

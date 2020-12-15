@@ -9,6 +9,7 @@ const addFavorite = require('../controllers/addFavorite');
 const removeFavorite = require('../controllers/removeFavorite');
 const getInfo = require('../controllers/getInfo');
 const updatePassword = require('../controllers/updatePassword');
+const changeAvatar = require('../controllers/changeAvatar');
 
 router.post('/sign-up', signUp);
 router.post('/sign-in', signIn);
@@ -20,5 +21,7 @@ router.put('/remove-favorite', removeFavorite);
 router.put('/update-password', updatePassword);
 
 router.get('/get-info', getInfo);
+
+router.post('/change-avatar', changeAvatar);
 
 module.exports = router;
