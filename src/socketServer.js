@@ -18,25 +18,6 @@ function createSocketServer(server) {
             socket.join(roomsInfo.newRoom)
             myRoom = roomsInfo.newRoom
             console.log('JE SUIS DANS ROOM : ', myRoom)
-
-            // io.to(roomsInfo.oldRoom).emit('messageToChannel', { msg: (socket.username + ' leaves this channel'), user: socket.username })
-
-            // var msg
-            // if (roomsInfo.newRoom === '0') {
-            //     msg = 'Connecté à Global'
-            // } else if (roomsInfo.newRoom === '1') {
-            //     msg = 'Connecté à Amis'
-            // } else if (roomsInfo.newRoom === '2') {
-            //     msg = 'Connecté à Famille'
-            // }
-
-            let msg={
-                msg:`coucou ${myRoom}`,
-                sender:'ME',
-                status:'admin'
-            }
-
-            socketServer.to(myRoom).emit('messageFromChannel', { messageInfo: msg, room: myRoom })
         })
 
 
@@ -45,11 +26,6 @@ function createSocketServer(server) {
             console.log('in ROOM : ', messageInfo)
             socketServer.to(myRoom).emit('messageFromChannel', {messageInfo, room: myRoom})
         })
-
-        // socket.on('sendMessage', function (message) {
-        //     console.log('def : ', message)
-        //     socket.emit('sendMessageToAll', message)
-        // })
 
 
         // Room contenant tous les pilotes et admins (pour envoyer des messages globaux importants)
