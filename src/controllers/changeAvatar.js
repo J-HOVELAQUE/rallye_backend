@@ -20,19 +20,19 @@ async function changeAvatar(req, res) {
 
     console.log('DATA', req.files);
 
-    // const imagePath = './tmp/' + uniquid() + '.jpg';
-    // const resultCopy = await req.files.photo.mv(imagePath);
-    // const resultCloudinary = await cloudinary.uploader.upload(imagePath);
+    const imagePath = './tmp/' + uniquid() + '.jpg';
+    const resultCopy = await req.files.avatar.mv(imagePath);
+    const resultCloudinary = await cloudinary.uploader.upload(imagePath);
 
-    // console.log('Result CLOUD', resultCloudinary);
+    console.log('Result CLOUD', resultCloudinary);
 
-    // if (!resultCopy) {
-    //     res.json({ result: true, message: 'File uploaded!', info: resultCloudinary });
-    // } else {
-    //     res.json({ result: false, message: resultCopy });
-    // }
+    if (!resultCopy) {
+        res.json({ result: true, message: 'File uploaded!', info: resultCloudinary });
+    } else {
+        res.json({ result: false, message: resultCopy });
+    }
 
-    // fs.unlinkSync(imagePath);
+    fs.unlinkSync(imagePath);
 }
 
 module.exports = changeAvatar;
