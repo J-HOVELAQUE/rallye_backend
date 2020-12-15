@@ -11,7 +11,6 @@ async function getUserByStatus(req, res) {
         .populate('pilot_2')
         .exec();
 
-    // const pilotData = await UserModel.find({ status: "pilot" });
     const pilots = [];
 
     teams.forEach(team => {
@@ -28,21 +27,6 @@ async function getUserByStatus(req, res) {
             _id: team.pilot_2._id
         })
     });
-
-    // const pilots = teams.map(team => {
-    //     return {
-    //         team: team._id,
-    //         name: team.pilot_1.name,
-    //         firstname: team.pilot_1.firstname,
-    //         _id: team.pilot_1._id
-    //     },
-    //     {
-    //         team: team._id,
-    //         name: team.pilot_2.name,
-    //         firstname: team.pilot_2.firstname,
-    //         _id: team.pilot_2._id
-    //     }
-    // });
 
     const adminData = await UserModel.find({ status: "admin" });
 
