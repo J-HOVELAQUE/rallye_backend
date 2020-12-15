@@ -11,6 +11,7 @@ const adminRouter = require('./routers/admin');
 const teamsRouter = require('./routers/teams');
 const newsRouter = require('./routers/news');
 const programRouter = require('./routers/programs');
+const chatRouter = require('./routers/chat');
 
 
 const createSocketServer = require('./socketServer');
@@ -41,6 +42,7 @@ function buildApp() {
     app.use('/teams', teamsRouter);
     app.use('/news', newsRouter);
     app.use('/program', programRouter);
+    app.use('/chat', chatRouter);
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
