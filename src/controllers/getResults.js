@@ -4,7 +4,21 @@ const ResultModel = require('../db/models/result');
 async function getResults(req, res) {
 
     const results = await ResultModel.find()
-        .populate('team_id')
+        // .populate('team_id')
+        .populate({
+            path: 'team_id',
+            populate: {
+                path: 'pilot_1',
+
+            },
+        })
+        .populate({
+            path: 'team_id',
+            populate: {
+                path: 'pilot_2'
+            }
+        })
+
         .sort({ position: 1 })
         .exec();
     console.log(results);
