@@ -3,7 +3,7 @@ const ResultModel = require('../db/models/result');
 
 async function getResults(req, res) {
 
-    const results = await ResultModel.find()
+    const results = await ResultModel.find({ stage: 'ES1' })
         // .populate('team_id')
         .populate({
             path: 'team_id',
