@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const http = require('http');
 const createError = require('http-errors');
 const fileUpload = require('express-fileupload');
+const config = require('config');
+
 
 const indexRouter = require('./routers/index');
 const userRouter = require('./routers/user');
@@ -14,8 +16,9 @@ const resultsRouter = require('./routers/results');
 const programRouter = require('./routers/programs');
 const chatRouter = require('./routers/chat');
 
-
 const createSocketServer = require('./socketServer');
+
+const ALLOWED_ORIGIN = config.get('allowedOrigin');
 
 
 function buildApp() {
@@ -31,7 +34,7 @@ function buildApp() {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(function (req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
         next();

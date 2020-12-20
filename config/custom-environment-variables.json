@@ -12,5 +12,6 @@
         "cloud_name": "CLOUD_NAME",
         "api_key": "CLOUD_KEY",
         "api_secret": "CLOUD_SECRET"
-    }
+    },
+    "allowedOrigin": "ALLOWED_ORIGIN"
 }
