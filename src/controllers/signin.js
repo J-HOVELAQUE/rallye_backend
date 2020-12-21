@@ -59,7 +59,10 @@ async function signIn(req, res) {
       if (hash === user.password) {
         result = true;
         answer.token = user.token;
-        answer.status = user.status
+        answer.status = user.status;
+        answer.firstname = user.firstname;
+        answer.name = user.name;
+        answer.avatar = user.avatar
       } else {
         errorArray.push('wrong password')
       }
