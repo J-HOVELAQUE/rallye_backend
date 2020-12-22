@@ -1,7 +1,19 @@
 const socketio = require('socket.io');
+const config = require('config');
+
+
+const ALLOWED_ORIGIN = config.get('allowedOrigin');
+
 
 function createSocketServer(server) {
-    const socketServer = socketio(server);
+    const socketServer = socketio(server, {
+        cors: {
+            origin: ALLOWED_ORIGIN,
+            methods: ["GET", "POST"],
+            allowedHeaders: ["my-custom-header"],
+            credentials: true
+        }
+    });
 
     socketServer.on('connection', function (socket) {
         console.log('New Connection');
@@ -24,7 +36,7 @@ function createSocketServer(server) {
         // Listen another event
         socket.on('messageToChannel', function (messageInfo) {
             console.log('in ROOM : ', messageInfo)
-            socketServer.to(myRoom).emit('messageFromChannel', {messageInfo, room: myRoom})
+            socketServer.to(myRoom).emit('messageFromChannel', { messageInfo, room: myRoom })
         })
 
 
