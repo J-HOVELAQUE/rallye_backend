@@ -58,7 +58,8 @@ async function signUp(req, res) {
                 token: uid2(32),
                 status: "fan",
                 salt: salt,
-                avatar: req.body.avatar
+                avatar: req.body.avatar,
+                favorite: []
             });
 
             userSaved = await newUser.save();

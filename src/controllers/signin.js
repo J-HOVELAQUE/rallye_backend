@@ -27,6 +27,8 @@ async function signIn(req, res) {
     status: null
   }
 
+  let favorites = [];
+
   ////// Validation payload //////
 
   const { error } = schemaPayload.validate(req.body,
@@ -46,9 +48,9 @@ async function signIn(req, res) {
 
   if (errorArray.length == 0) {
 
-    user = await UserModel.findOne({
-      email: req.body.email
-    });
+    user = await UserModel.findOne({ email: req.body.email })
+      .populate('favorite')
+      .exec();
 
     if (user) {
       var hash = SHA256(req.body.password + user.salt).toString(encBase64);
@@ -62,7 +64,8 @@ async function signIn(req, res) {
         answer.status = user.status;
         answer.firstname = user.firstname;
         answer.name = user.name;
-        answer.avatar = user.avatar
+        answer.avatar = user.avatar;
+        favorites = user.favorite.map(fav => fav.car_id)
       } else {
         errorArray.push('wrong password')
       }
@@ -75,6 +78,7 @@ async function signIn(req, res) {
     result,
     data: answer,
     error: errorArray,
+    favorites
   })
 }
 
