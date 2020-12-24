@@ -11,6 +11,8 @@ const getInfo = require('../controllers/getInfo');
 const updatePassword = require('../controllers/updatePassword');
 const changeAvatar = require('../controllers/changeAvatar');
 
+const getInfoMock = require('../controllers/getInfoMock');
+
 router.post('/sign-up', signUp);
 router.post('/sign-in', signIn);
 
@@ -21,6 +23,8 @@ router.put('/remove-favorite', removeFavorite);
 router.put('/update-password', updatePassword);
 
 router.get('/get-info', getInfo);
+router.get('/get-info/mock', getInfoMock);
+
 
 router.post('/change-avatar', changeAvatar);
 
