@@ -2,14 +2,12 @@ const uid2 = require('uid2');
 const SHA256 = require("crypto-js/sha256");
 var encBase64 = require("crypto-js/enc-base64");
 
-
 const UserModel = require('../../db/models/user');
 
 async function signUp(req, res) {
 
     const salt = uid2(32);
     let userSaved;
-
     let recorded = false;
 
     const newUser = new UserModel({
@@ -26,10 +24,6 @@ async function signUp(req, res) {
 
     })
     userSaved = await newUser.save();
-
-
-
-
 
     res.json({
         recorded: recorded,

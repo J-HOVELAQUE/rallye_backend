@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const getProgram = require('../controllers/getProgram');
+const getProgram = require('../controllers/programs/getProgram');
 
 router.get('/get-program', getProgram);
 

@@ -1,9 +1,8 @@
-const UserModel = require('../db/models/user');
+const UserModel = require('../../db/models/user');
 
 async function updateUser(req, res) {
 
     let result = false
-    // var update = { [req.body.keyToUpdate]: req.body.newValue }
     let jsonFields = JSON.parse(req.body.newValue)
 
     var update = {

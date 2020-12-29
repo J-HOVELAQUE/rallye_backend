@@ -1,6 +1,5 @@
 const TeamModel = require('../../db/models/team');
 
-
 async function recordTeam(req, res) {
 
     const newTeam = new TeamModel({

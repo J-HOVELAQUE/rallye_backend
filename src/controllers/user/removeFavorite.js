@@ -1,13 +1,12 @@
-const UserModel = require('../db/models/user');
+const UserModel = require('../../db/models/user');
 
-async function addFavorite(req, res) {
-
+async function removeFavorite(req, res) {
     try {
         await UserModel.updateOne(
             {
                 token: req.body.token
             }, {
-            $push: { favorite: req.body.newValue }
+            $pull: { favorite: req.body.valueToRemove }
         })
     } catch (error) {
         res.json({ result: false })
@@ -15,4 +14,4 @@ async function addFavorite(req, res) {
     res.json({ result: true })
 }
 
-module.exports = addFavorite;
+module.exports = removeFavorite;

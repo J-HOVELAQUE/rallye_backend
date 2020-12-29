@@ -1,4 +1,4 @@
-const ChatModel = require('../db/models/chat');
+const ChatModel = require('../../db/models/chat');
 
 async function updateChat(req, res) {
 

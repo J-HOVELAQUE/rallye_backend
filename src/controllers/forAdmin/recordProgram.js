@@ -1,6 +1,5 @@
 const ProgramModel = require('../../db/models/program');
 
-
 async function recordProgram(req, res) {
 
     const newProgram = new ProgramModel({

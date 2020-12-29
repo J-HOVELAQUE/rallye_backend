@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const AccomodationModel = require('../db/models/accomodation');
-const CateringModel = require('../db/models/catering');
+const AccomodationModel = require('../../db/models/accomodation');
+const CateringModel = require('../../db/models/catering');
 
-const getIdWithToken = require('../tools/getIdWithToken');
+const getIdWithToken = require('../../tools/getIdWithToken');
 
 //////// This controller return accomodation depending of the day of the week to avoid to repopulate db /////////
 
@@ -41,11 +41,9 @@ async function getInfoMock(req, res) {
     //// Getting the catering of the day  /////
     const catering = await CateringModel
         .aggregate()
-
         .addFields({ "month": { $month: '$date' }, "day": { $dayOfMonth: '$date' }, "year": { $year: '$date' } })
         .match({ day: returnDay() }, { month: 12 }, { year: 2020 })
         .exec()
-
 
     res.json({ accomodation, catering })
 }

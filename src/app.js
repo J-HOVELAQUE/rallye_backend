@@ -20,7 +20,6 @@ const createSocketServer = require('./socketServer');
 
 const ALLOWED_ORIGIN = config.get('allowedOrigin');
 
-
 function buildApp() {
     const app = express();
 
@@ -62,7 +61,5 @@ function buildApp() {
 
     return server;
 }
-
-
 
 module.exports = buildApp;

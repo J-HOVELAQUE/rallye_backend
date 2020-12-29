@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const getResults = require('../controllers/getResults.js');
+const getResults = require('../controllers/results/getResults.js');
 
 router.get('/results', getResults);
 

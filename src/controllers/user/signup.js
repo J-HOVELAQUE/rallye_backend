@@ -3,7 +3,7 @@ const SHA256 = require("crypto-js/sha256");
 var encBase64 = require("crypto-js/enc-base64");
 const Joi = require('joi');
 
-const UserModel = require('../db/models/user');
+const UserModel = require('../../db/models/user');
 
 const schemaPayload = Joi.object({
     firstname: Joi.string(),
@@ -30,11 +30,8 @@ async function signUp(req, res) {
     let recorded = false;
 
     ///// Validation payload /////
-
     const { error } = schemaPayload.validate(req.body,
         { abortEarly: false });
-
-    console.log('ERREUR', error);
 
     try {
         const answerJoi = error.details;
@@ -47,7 +44,6 @@ async function signUp(req, res) {
     }
 
     ///// Process if payload is ok //////
-
     if (errorArray.length === 0) {
         try {
             const newUser = new UserModel({

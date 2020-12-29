@@ -1,6 +1,5 @@
 const CarModel = require('../../db/models/car');
 
-
 async function recordCar(req, res) {
 
     const newCar = new CarModel({

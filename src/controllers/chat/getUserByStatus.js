@@ -1,11 +1,13 @@
-//// This controller return the list of user by status ////
+//// This controller return the list of user by status for the chat (only admin and pilot) ////
 
-const UserModel = require('../db/models/user');
-const TeamModel = require('../db/models/team');
+const UserModel = require('../../db/models/user');
+const TeamModel = require('../../db/models/team');
 
 
 async function getUserByStatus(req, res) {
 
+    //// Pilots ////
+    //// We need the car_id of each pilot so no other way to use the team model and populate it ////
     const teams = await TeamModel.find()
         .populate('pilot_1')
         .populate('pilot_2')
@@ -28,6 +30,8 @@ async function getUserByStatus(req, res) {
         })
     });
 
+
+    //// admins ////
     const adminData = await UserModel.find({ status: "admin" });
 
     const admins = adminData.map(admin => {

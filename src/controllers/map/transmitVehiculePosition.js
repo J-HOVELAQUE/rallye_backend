@@ -1,5 +1,5 @@
 //// This function relay the position of a vehicule from transponder toward frontend ////
-const TeamModel = require('../db/models/team');
+const TeamModel = require('../../db/models/team');
 
 let allPosition = [];
 
@@ -9,8 +9,6 @@ async function transmitVehiculePosition(req, res) {
         if (allPosition[i].idVehicule === req.body.idVehicule) {
             allPosition[i].lat = req.body.lat;
             allPosition[i].long = req.body.long;
-
-
             alreadyRecorded = true;
         }
     }
@@ -19,12 +17,12 @@ async function transmitVehiculePosition(req, res) {
 
         const findedCar = await TeamModel.findOne({ car_id: parseInt(req.body.idVehicule, 10) });
 
+        //// Join a color for the marker of the vehicule depending of it category ////
         if (findedCar.category === "G/H/I") {
             newCar.color = "blue"
         } else {
             newCar.color = "red"
         }
-
         allPosition.push(newCar)
     }
     req.dependencies.socketServer.emit('sendPositionToAll', { allPosition });

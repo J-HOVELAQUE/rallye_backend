@@ -1,5 +1,4 @@
-
-const TeamModel = require('../db/models/team');
+const TeamModel = require('../../db/models/team');
 
 async function getAllTeams(req, res) {
 
