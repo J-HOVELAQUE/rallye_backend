@@ -7,25 +7,20 @@ const UserModel = require('../src/db/models/user');
 
 const app = buildApp();
 
-
-async function clearDatabase() {
-    await UserModel.deleteMany()
-}
-
-
 describe('App', () => {
     // This will be runned before all tests.
     beforeEach(async () => {
         await createConnection();
-        await clearDatabase();
+        await UserModel.deleteMany()
     });
 
     afterEach(async () => {
-        await clearDatabase();
+        await UserModel.deleteMany()
         await mongoose.connection.close();
     });
 
-    test('POST /user/sign-up', async () => {
+    ////////////////////////////////////////////////////////////////////
+    test('POST /user/sign-up valid', async () => {
 
         const payload = {
             firstname: 'toto',
@@ -38,9 +33,9 @@ describe('App', () => {
             .post('/user/sign-up')
             .send(payload)
 
+        //// test the return of backend
         expect(response.body).toStrictEqual({
             "data": {
-                // "__v": 0,
                 "favorite": [],
                 "firstname": "toto",
                 "name": "L'Asticot",
@@ -52,11 +47,8 @@ describe('App', () => {
         });
         expect(response.status).toStrictEqual(200);
 
+        //// test the content of db
         const userFromDb = await UserModel.find();
-
-        console.log('>>>>>>>>ANSWER', userFromDb);
-        console.log('>>>>>>>TYPE', typeof userFromDb[0]._id);
-
 
         expect(userFromDb.length).toStrictEqual(1);
         expect(userFromDb[0]._id).toStrictEqual(expect.any(Object));
@@ -68,5 +60,96 @@ describe('App', () => {
         expect(userFromDb[0].salt).toStrictEqual(expect.any(String));
         expect(userFromDb[0].favorite).toStrictEqual(expect.any(Array));
     });
+
+    ////////////////////////////////////////////////////////////////////
+    test('POST /user/sign-up invalid payload (password)', async () => {
+
+        const payload = {
+            firstname: 'toto',
+            name: "L'Asticot",
+            email: 'toto@gmail.com',
+            password: 'm',
+        };
+
+        const response = await supertest(app)
+            .post('/user/sign-up')
+            .send(payload)
+
+        expect(response.body).toStrictEqual({
+            "error": [
+                "\"password\" length must be at least 3 characters long",
+            ],
+            "recorded": false,
+            "type": "invalid payload"
+        })
+        expect(response.status).toStrictEqual(400);
+        const userFromDb = await UserModel.find();
+        expect(userFromDb.length).toStrictEqual(0);
+    });
+
+    ////////////////////////////////////////////////////////////////////
+    test('POST /user/sign-up invalid payload (password + name + email)', async () => {
+
+        const payload = {
+            firstname: 'toto',
+            name: "",
+            email: 'dfgx',
+            password: 'm',
+        };
+
+        const response = await supertest(app)
+            .post('/user/sign-up')
+            .send(payload)
+
+        expect(response.body).toStrictEqual({
+            "error": [
+                "\"name\" is not allowed to be empty",
+                "\"password\" length must be at least 3 characters long",
+                "\"email\" must be a valid email"
+            ],
+            "recorded": false,
+            "type": "invalid payload"
+        })
+        expect(response.status).toStrictEqual(400);
+        const userFromDb = await UserModel.find();
+        expect(userFromDb.length).toStrictEqual(0);
+    })
+
+    ////////////////////////////////////////////////////////////////////
+    test('POST /user/sign-up invalid payload (existing email)', async () => {
+
+        const existingEmail = {
+            firstname: 'jean',
+            name: "Bon",
+            email: 'toto@gmail.com',
+            password: 'password'
+        };
+
+        await supertest(app)
+            .post('/user/sign-up')
+            .send(existingEmail)
+
+        const payload = {
+            firstname: 'toto',
+            name: "L'Asticot",
+            email: 'toto@gmail.com',
+            password: 'maiden'
+        };
+
+        const response = await supertest(app)
+            .post('/user/sign-up')
+            .send(payload)
+
+        expect(response.body).toStrictEqual({
+            "error": [
+                "email existant",
+            ],
+            "recorded": false,
+            "type": "conflict",
+        })
+        expect(response.status).toStrictEqual(409);
+        const userFromDb = await UserModel.find();
+        expect(userFromDb.length).toStrictEqual(1);
+    })
 });
 
