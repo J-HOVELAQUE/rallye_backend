@@ -25,7 +25,7 @@ const schemaPayload = Joi.object({
 async function signUp(req, res) {
 
     const salt = uid2(32);
-    let userSaved;
+    let answerForFront = {};
     const errorArray = [];
     let recorded = false;
 
@@ -33,14 +33,21 @@ async function signUp(req, res) {
     const { error } = schemaPayload.validate(req.body,
         { abortEarly: false });
 
-    try {
+    if (error) {
         const answerJoi = error.details;
 
         answerJoi.forEach(element => {
             errorArray.push(element.message)
         });
-    } catch (error) {
-        console.log(error);
+
+        res.status(400);
+        res.json({
+            type: "invalid payload",
+            error: errorArray,
+            recorded: false
+        })
+
+        return
     }
 
     ///// Process if payload is ok //////
@@ -58,20 +65,35 @@ async function signUp(req, res) {
                 favorite: []
             });
 
-            userSaved = await newUser.save();
+            const userSaved = await newUser.save();
+
+            answerForFront = {
+                firstname: userSaved.firstname,
+                name: userSaved.name,
+                token: userSaved.token,
+                status: userSaved.status,
+                avatar: userSaved.avatar,
+                favorite: userSaved.favorite
+            }
             recorded = true;
 
         } catch (error) {
             if (error.code === 11000) {
-                errorArray.push("email existant");
+                res.status(409);
+                res.json({
+                    type: "conflict",
+                    error: ["email existant"],
+                    recorded: false
+                })
+                return
             }
+            throw error;
         }
     }
 
-
     res.json({
         recorded: recorded,
-        data: userSaved,
+        data: answerForFront,
         error: errorArray
     })
 }
