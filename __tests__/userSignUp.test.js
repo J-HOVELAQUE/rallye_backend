@@ -7,7 +7,7 @@ const UserModel = require('../src/db/models/user');
 
 const app = buildApp();
 
-describe('App', () => {
+describe('sign-up', () => {
     // This will be runned before all tests.
     beforeEach(async () => {
         await createConnection();

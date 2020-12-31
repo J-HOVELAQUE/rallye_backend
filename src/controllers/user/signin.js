@@ -31,12 +31,21 @@ async function signIn(req, res) {
     const { error } = schemaPayload.validate(req.body,
         { abortEarly: false });
 
-    if (error !== undefined) {
+    if (error) {
         const answerJoi = error.details;
 
         answerJoi.forEach(element => {
             errorArray.push(element.message)
         });
+
+        res.status(400);
+        res.json({
+            result,
+            data: answer,
+            error: errorArray,
+            favorites
+        })
+        return
     }
 
     ///// Process if payload ok /////
@@ -60,10 +69,24 @@ async function signIn(req, res) {
                 answer.avatar = user.avatar;
                 favorites = user.favorite.map(fav => fav.car_id)
             } else {
-                errorArray.push('wrong password')
+                res.status(400);
+                res.json({
+                    result,
+                    data: answer,
+                    error: ['wrong password'],
+                    favorites
+                })
+                return
             }
         } else {
-            errorArray.push("inexisting email")
+            res.status(400);
+            res.json({
+                result,
+                data: answer,
+                error: ['inexisting email'],
+                favorites
+            })
+            return
         }
     }
 
