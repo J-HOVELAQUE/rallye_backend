@@ -48,8 +48,6 @@ describe('program', () => {
         const response = await supertest(app)
             .get('/program/get-program')
 
-        console.log('>>>>>>>>>>>>>>>>PROGRAM', typeof response.body.program[0].date);
-
         expect(response.body).toStrictEqual({
             "program": [
                 {

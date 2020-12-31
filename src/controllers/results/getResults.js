@@ -20,7 +20,6 @@ async function getResults(req, res) {
 
         .sort({ position: 1 })
         .exec();
-    console.log(results);
 
     res.json({ results: results })
 }
