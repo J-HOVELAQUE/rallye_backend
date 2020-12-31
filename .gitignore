@@ -1,2 +1,5 @@
 node_modules
 config/julien.json
+config/dev.json
+
+coverage/
