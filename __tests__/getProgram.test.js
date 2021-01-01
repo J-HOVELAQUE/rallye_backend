@@ -13,7 +13,7 @@ describe('program', () => {
         await createConnection();
         await ProgramModel.deleteMany();
 
-        const existingNews = [
+        const existingProg = [
             {
                 date: new Date(97, 12, 25, 1, 0, 0),
                 "event": [
@@ -31,9 +31,20 @@ describe('program', () => {
             }
         ];
 
-        existingNews.forEach(async (news) => {
-            const newNews = new ProgramModel(news);
-            await newNews.save();
+        existingProg.forEach(async (news) => {
+            const record = await supertest(app)
+                .post('/admin/program')
+                .send(news)
+
+            expect(record.body).toStrictEqual({
+                "data": {
+                    "__v": 0,
+                    "_id": expect.any(String),
+                    "date": "1998-01-25T00:00:00.000Z",
+                    "event": news.event
+                },
+                "recorded": true,
+            })
         });
     })
 

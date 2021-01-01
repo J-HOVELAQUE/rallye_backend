@@ -32,13 +32,14 @@ describe('news', () => {
         ];
 
         existingNews.forEach(async (news) => {
-            const newNews = new NewsModel(news);
-            await newNews.save();
+            await supertest(app)
+                .post('/admin/news')
+                .send(news)
         });
     })
 
     afterEach(async () => {
-        await NewsModel.deleteMany()
+        await NewsModel.deleteMany();
         await mongoose.connection.close();
     });
 

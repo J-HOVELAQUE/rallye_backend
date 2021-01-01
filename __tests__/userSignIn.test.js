@@ -8,19 +8,10 @@ const UserModel = require('../src/db/models/user');
 const app = buildApp();
 
 describe('sign-in', () => {
-    // This will be runned before all tests.
+
     beforeEach(async () => {
         await createConnection();
         await UserModel.deleteMany();
-
-    })
-    afterEach(async () => {
-        await UserModel.deleteMany()
-        await mongoose.connection.close();
-    });
-
-    ////////////////////////////////////////////////////////
-    test('POST /user/sign-in valid', async () => {
 
         const existingEmail = {
             firstname: 'jean',
@@ -32,7 +23,15 @@ describe('sign-in', () => {
         await supertest(app)
             .post('/user/sign-up')
             .send(existingEmail);
+    })
 
+    afterEach(async () => {
+        await UserModel.deleteMany()
+        await mongoose.connection.close();
+    });
+
+    ////////////////////////////////////////////////////////
+    test('POST /user/sign-in valid', async () => {
 
         const payload = {
             email: 'toto@gmail.com',
@@ -60,18 +59,6 @@ describe('sign-in', () => {
     ////////////////////////////////////////////////////////
     test('POST /user/sign-in invalid(wrong password)', async () => {
 
-        const existingEmail = {
-            firstname: 'jean',
-            name: "Bon",
-            email: 'toto@gmail.com',
-            password: 'maiden'
-        };
-
-        await supertest(app)
-            .post('/user/sign-up')
-            .send(existingEmail);
-
-
         const payload = {
             email: 'toto@gmail.com',
             password: 'maidend'
@@ -98,18 +85,6 @@ describe('sign-in', () => {
     ////////////////////////////////////////////////////////
     test('POST /user/sign-in invalid(inexisting email)', async () => {
 
-        const existingEmail = {
-            firstname: 'jean',
-            name: "Bon",
-            email: 'toto@gmail.com',
-            password: 'maiden'
-        };
-
-        await supertest(app)
-            .post('/user/sign-up')
-            .send(existingEmail);
-
-
         const payload = {
             email: 'tata@gmail.com',
             password: 'maiden'
@@ -135,18 +110,6 @@ describe('sign-in', () => {
 
     ////////////////////////////////////////////////////////
     test('POST /user/sign-in invalid(invalid payload)', async () => {
-
-        const existingEmail = {
-            firstname: 'jean',
-            name: "Bon",
-            email: 'toto@gmail.com',
-            password: 'maiden'
-        };
-
-        await supertest(app)
-            .post('/user/sign-up')
-            .send(existingEmail);
-
 
         const payload = {
             email: '',
