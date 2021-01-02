@@ -73,7 +73,8 @@ async function signUp(req, res) {
                 token: userSaved.token,
                 status: userSaved.status,
                 avatar: userSaved.avatar,
-                favorite: userSaved.favorite
+                favorite: userSaved.favorite,
+                email: userSaved.email
             }
             recorded = true;
 
