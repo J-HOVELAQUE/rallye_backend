@@ -31,11 +31,19 @@ describe('news', () => {
             }
         ];
 
-        existingNews.forEach(async (news) => {
-            await supertest(app)
-                .post('/admin/news')
-                .send(news)
-        });
+
+        await supertest(app)
+            .post('/admin/news')
+            .send(existingNews[0]);
+
+        await supertest(app)
+            .post('/admin/news')
+            .send(existingNews[1]);
+
+        await supertest(app)
+            .post('/admin/news')
+            .send(existingNews[2])
+
     })
 
     afterEach(async () => {

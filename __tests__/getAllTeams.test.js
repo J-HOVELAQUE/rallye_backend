@@ -104,7 +104,7 @@ describe('results', () => {
                 },
             ],
         });
-        // expect(response.status).toStrictEqual(200);
+        expect(response.status).toStrictEqual(200);
 
 
     })
