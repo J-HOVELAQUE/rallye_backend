@@ -31,22 +31,36 @@ describe('program', () => {
             }
         ];
 
-        existingProg.forEach(async (news) => {
-            const record = await supertest(app)
-                .post('/admin/program')
-                .send(news)
 
-            expect(record.body).toStrictEqual({
-                "data": {
-                    "__v": 0,
-                    "_id": expect.any(String),
-                    "date": "1998-01-25T00:00:00.000Z",
-                    "event": news.event
-                },
-                "recorded": true,
-            })
+        const record1 = await supertest(app)
+            .post('/admin/program')
+            .send(existingProg[0])
+
+        expect(record1.body).toStrictEqual({
+            "data": {
+                "__v": 0,
+                "_id": expect.any(String),
+                "date": "1998-01-25T00:00:00.000Z",
+                "event": existingProg[0].event
+            },
+            "recorded": true,
         });
-    })
+
+        const record2 = await supertest(app)
+            .post('/admin/program')
+            .send(existingProg[1])
+
+        expect(record2.body).toStrictEqual({
+            "data": {
+                "__v": 0,
+                "_id": expect.any(String),
+                "date": "1998-01-25T00:00:00.000Z",
+                "event": existingProg[1].event
+            },
+            "recorded": true,
+        })
+    });
+
 
     afterEach(async () => {
         await ProgramModel.deleteMany();

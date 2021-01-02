@@ -6,26 +6,28 @@ const createConnection = require('../src/db/connection');
 const TeamModel = require('../src/db/models/team');
 const UserModel = require('../src/db/models/user');
 const CarModel = require('../src/db/models/car');
-
 const app = buildApp();
 
-describe('teams', () => {
-    // This will be runned before all tests.
+describe('favorites', () => {
+
+    let token = null;
+    let teamId = null;
+
     beforeEach(async () => {
         await createConnection();
         await TeamModel.deleteMany();
         await UserModel.deleteMany();
         await CarModel.deleteMany();
 
-
-        const existingPilots = [
+        const existingUsers = [
             {
                 firstname: "Jean",
                 name: "Dupont",
                 email: "dup@gmail.com",
                 password: "maiden",
                 status: "pilot",
-                nationality: "fra"
+                nationality: "fra",
+                favorite: []
             },
             {
                 firstname: "Rene",
@@ -33,17 +35,21 @@ describe('teams', () => {
                 email: "ren@gmail.com",
                 password: "maiden",
                 status: "pilot",
-                nationality: "fra"
+                nationality: "fra",
+                favorite: []
+
             }
         ]
 
         const recordedPilot1 = await supertest(app)
             .post('/admin/user')
-            .send(existingPilots[0]);
+            .send(existingUsers[0]);
+
+        token = recordedPilot1.body.data.token;
 
         const recordedPilot2 = await supertest(app)
             .post('/admin/user')
-            .send(existingPilots[1]);
+            .send(existingUsers[1]);
 
         const existingCar = {
             brand: 'FERRARI',
@@ -65,10 +71,11 @@ describe('teams', () => {
             grid: 1
         }
 
-        await supertest(app)
+        const recordedTeam = await supertest(app)
             .post('/admin/team')
             .send(existingTeam);
 
+        teamId = recordedTeam.body.data._id;
 
     })
 
@@ -79,33 +86,40 @@ describe('teams', () => {
         await mongoose.connection.close();
     });
 
-    test('POST /teams/get-teams valid', async () => {
+    test('POST /user/add-favorite valid', async () => {
+
+        const payload = {
+            token: token,
+            newValue: teamId
+        }
 
         const response = await supertest(app)
-            .get('/teams/get-teams')
+            .put('/user/add-favorite')
+            .send(payload);
 
-        expect(response.body).toStrictEqual({
-
-            "teams": [
-                {
-                    "__v": 0,
-                    "_id": expect.any(String),
-                    "car": {
-                        "__v": 0,
-                        "_id": expect.any(String),
-                        "brand": "FERRARI",
-                        "image": "https://res.cloudinary.com/dibl3ihpy/image/upload/v1607604492/253_rahrtt.jpg",
-                        "model": "308 Gr IV Michelotto",
-                        "year": 1981,
-                    },
-                    "car_id": 104,
-                    "category": "Basse",
-                    "grid": 1,
-                },
-            ],
-        });
+        expect(response.body).toStrictEqual({ "result": true });
         expect(response.status).toStrictEqual(200);
 
+        let userFromDb = await UserModel.findOne({ token: token });
+
+        expect(userFromDb.favorite.length).toStrictEqual(1);
+        expect(userFromDb.favorite[0].toString()).toStrictEqual(teamId.toString());
+
+        const payload2 = {
+            token: token,
+            valueToRemove: teamId
+        }
+
+        const response2 = await supertest(app)
+            .put('/user/remove-favorite')
+            .send(payload2);
+
+        expect(response2.body).toStrictEqual({ "result": true });
+        expect(response2.status).toStrictEqual(200);
+
+        userFromDb = await UserModel.findOne({ token: token });
+
+        expect(userFromDb.favorite.length).toStrictEqual(0);
 
     })
 })
