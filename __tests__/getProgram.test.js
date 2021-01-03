@@ -8,11 +8,12 @@ const ProgramModel = require('../src/db/models/program');
 const app = buildApp();
 
 describe('program', () => {
-    // This will be runned before all tests.
+
     beforeEach(async () => {
         await createConnection();
         await ProgramModel.deleteMany();
 
+        //// Preparing database for test ////
         const existingProg = [
             {
                 date: new Date(97, 12, 25, 1, 0, 0),
@@ -36,6 +37,7 @@ describe('program', () => {
             .post('/admin/program')
             .send(existingProg[0])
 
+        //// Check return of backend ////
         expect(record1.body).toStrictEqual({
             "data": {
                 "__v": 0,
@@ -50,6 +52,7 @@ describe('program', () => {
             .post('/admin/program')
             .send(existingProg[1])
 
+        //// Check return of backend ////
         expect(record2.body).toStrictEqual({
             "data": {
                 "__v": 0,
@@ -63,6 +66,8 @@ describe('program', () => {
 
 
     afterEach(async () => {
+
+        //// Purging database ////
         await ProgramModel.deleteMany();
         await mongoose.connection.close();
     });

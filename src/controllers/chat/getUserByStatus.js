@@ -30,7 +30,6 @@ async function getUserByStatus(req, res) {
         })
     });
 
-
     //// admins ////
     const adminData = await UserModel.find({ status: "admin" });
 

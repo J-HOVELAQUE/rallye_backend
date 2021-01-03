@@ -1,3 +1,4 @@
+//// Return full informations of teams (with car and pilot) ////
 const TeamModel = require('../../db/models/team');
 
 async function getAllTeams(req, res) {
@@ -8,7 +9,6 @@ async function getAllTeams(req, res) {
         .populate('pilot_2')
         .populate('car')
         .exec();
-    console.log(teams);
 
     res.json({ teams: teams })
 }

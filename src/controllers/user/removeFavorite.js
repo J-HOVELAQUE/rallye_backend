@@ -1,6 +1,7 @@
 const UserModel = require('../../db/models/user');
 
 async function removeFavorite(req, res) {
+
     try {
         await UserModel.updateOne(
             {
@@ -8,9 +9,11 @@ async function removeFavorite(req, res) {
             }, {
             $pull: { favorite: req.body.valueToRemove }
         })
+
     } catch (error) {
         res.json({ result: false })
     }
+
     res.json({ result: true })
 }
 

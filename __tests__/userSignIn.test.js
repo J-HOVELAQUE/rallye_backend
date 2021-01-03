@@ -13,6 +13,7 @@ describe('sign-in', () => {
         await createConnection();
         await UserModel.deleteMany();
 
+        //// Prepare database for test ////
         const existingEmail = {
             firstname: 'jean',
             name: "Bon",
@@ -26,7 +27,9 @@ describe('sign-in', () => {
     })
 
     afterEach(async () => {
-        await UserModel.deleteMany()
+
+        //// Purging database ////
+        await UserModel.deleteMany();
         await mongoose.connection.close();
     });
 
@@ -45,6 +48,7 @@ describe('sign-in', () => {
         expect(response.body).toStrictEqual({
             "data": {
                 "firstname": "jean",
+                "email": "toto@gmail.com",
                 "name": "Bon",
                 "status": "fan",
                 "token": expect.any(String),

@@ -10,14 +10,13 @@ const CarModel = require('../src/db/models/car');
 const app = buildApp();
 
 describe('teams', () => {
-    // This will be runned before all tests.
     beforeEach(async () => {
         await createConnection();
         await TeamModel.deleteMany();
         await UserModel.deleteMany();
         await CarModel.deleteMany();
 
-
+        //// Preparing database for test ////
         const existingPilots = [
             {
                 firstname: "Jean",
@@ -68,11 +67,11 @@ describe('teams', () => {
         await supertest(app)
             .post('/admin/team')
             .send(existingTeam);
-
-
     })
 
     afterEach(async () => {
+
+        //// Purge database ////
         await TeamModel.deleteMany();
         await UserModel.deleteMany();
         await CarModel.deleteMany();
@@ -85,7 +84,6 @@ describe('teams', () => {
             .get('/teams/get-teams')
 
         expect(response.body).toStrictEqual({
-
             "teams": [
                 {
                     "__v": 0,
@@ -105,7 +103,5 @@ describe('teams', () => {
             ],
         });
         expect(response.status).toStrictEqual(200);
-
-
     })
 })

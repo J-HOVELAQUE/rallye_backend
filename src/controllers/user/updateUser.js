@@ -5,7 +5,7 @@ async function updateUser(req, res) {
     let result = false
     let jsonFields = JSON.parse(req.body.newValue)
 
-    var update = {
+    const update = {
         firstname: jsonFields.userFirstName,
         name: jsonFields.userLastName,
         email: jsonFields.userEmail,

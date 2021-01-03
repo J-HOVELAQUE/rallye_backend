@@ -1,3 +1,5 @@
+//// Connection to the database depending of the environment ////
+
 const config = require('config');
 const mongoose = require('mongoose');
 

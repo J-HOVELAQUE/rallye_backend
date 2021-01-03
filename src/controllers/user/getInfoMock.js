@@ -9,8 +9,6 @@ const getIdWithToken = require('../../tools/getIdWithToken');
 
 async function getInfoMock(req, res) {
 
-    console.log('QUERY', req.query);
-
     const idUser = await getIdWithToken(req.query.token);
     const today = new Date;
 

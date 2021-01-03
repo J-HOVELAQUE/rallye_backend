@@ -19,6 +19,7 @@ describe('favorites', () => {
         await UserModel.deleteMany();
         await CarModel.deleteMany();
 
+        ///// Prepare the database ////
         const existingUsers = [
             {
                 firstname: "Jean",
@@ -37,7 +38,6 @@ describe('favorites', () => {
                 status: "pilot",
                 nationality: "fra",
                 favorite: []
-
             }
         ]
 
@@ -76,10 +76,11 @@ describe('favorites', () => {
             .send(existingTeam);
 
         teamId = recordedTeam.body.data._id;
-
     })
 
     afterEach(async () => {
+
+        //// Purge database ////
         await TeamModel.deleteMany();
         await UserModel.deleteMany();
         await CarModel.deleteMany();
@@ -88,6 +89,7 @@ describe('favorites', () => {
 
     test('POST /user/add-favorite valid', async () => {
 
+        //// Adding a favorite ////
         const payload = {
             token: token,
             newValue: teamId
@@ -100,11 +102,13 @@ describe('favorites', () => {
         expect(response.body).toStrictEqual({ "result": true });
         expect(response.status).toStrictEqual(200);
 
+        //// Checking database ////
         let userFromDb = await UserModel.findOne({ token: token });
 
         expect(userFromDb.favorite.length).toStrictEqual(1);
         expect(userFromDb.favorite[0].toString()).toStrictEqual(teamId.toString());
 
+        //// Remove favorite ////
         const payload2 = {
             token: token,
             valueToRemove: teamId
@@ -117,6 +121,7 @@ describe('favorites', () => {
         expect(response2.body).toStrictEqual({ "result": true });
         expect(response2.status).toStrictEqual(200);
 
+        //// Checking database ////
         userFromDb = await UserModel.findOne({ token: token });
 
         expect(userFromDb.favorite.length).toStrictEqual(0);

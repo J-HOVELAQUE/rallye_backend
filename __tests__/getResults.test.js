@@ -11,7 +11,7 @@ const CarModel = require('../src/db/models/car');
 const app = buildApp();
 
 describe('results', () => {
-    // This will be runned before all tests.
+
     beforeEach(async () => {
         await createConnection();
         await ResultModel.deleteMany();
@@ -19,7 +19,7 @@ describe('results', () => {
         await UserModel.deleteMany();
         await CarModel.deleteMany();
 
-
+        //// Preparing database for test ////
         const existingPilots = [
             {
                 firstname: "Jean",
@@ -87,6 +87,8 @@ describe('results', () => {
     })
 
     afterEach(async () => {
+
+        //// Purging database ////
         await ResultModel.deleteMany();
         await TeamModel.deleteMany();
         await UserModel.deleteMany();
@@ -122,7 +124,5 @@ describe('results', () => {
             ],
         });
         expect(response.status).toStrictEqual(200);
-
-
     })
 })

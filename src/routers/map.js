@@ -5,5 +5,4 @@ const transmitVehiculePosition = require('../controllers/map/transmitVehiculePos
 
 router.post('/position', transmitVehiculePosition);
 
-
 module.exports = router;

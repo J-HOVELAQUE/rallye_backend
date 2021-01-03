@@ -8,11 +8,11 @@ const NewsModel = require('../src/db/models/news');
 const app = buildApp();
 
 describe('news', () => {
-    // This will be runned before all tests.
     beforeEach(async () => {
         await createConnection();
         await NewsModel.deleteMany();
 
+        //// Preparing database for test ////
         const existingNews = [
             {
                 title: "Accident",
@@ -47,6 +47,8 @@ describe('news', () => {
     })
 
     afterEach(async () => {
+
+        //// Purging database ////
         await NewsModel.deleteMany();
         await mongoose.connection.close();
     });

@@ -1,4 +1,4 @@
-//// Return result recorded sorted ////
+//// Return result recorded sorted with all information of pilots ////
 const ResultModel = require('../../db/models/result');
 
 async function getResults(req, res) {

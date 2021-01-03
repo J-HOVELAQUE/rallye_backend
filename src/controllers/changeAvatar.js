@@ -12,13 +12,16 @@ cloudinary.config({
     api_secret: config.get('cloudinary.api_secret')
 });
 
-
 async function changeAvatar(req, res) {
 
+    //// Record the photo in temp directory ////
     const imagePath = './tmp/' + uniquid() + '.jpg';
     const resultCopy = await req.files.avatar.mv(imagePath);
+
+    //// Sending photo to cloudinary ////
     const resultCloudinary = await cloudinary.uploader.upload(imagePath);
 
+    //// Record the url of the photo in database's users collection ////
     await UserModel.updateOne({ token: req.query.token }, { avatar: resultCloudinary.secure_url })
 
     if (!resultCopy) {
@@ -27,6 +30,7 @@ async function changeAvatar(req, res) {
         res.json({ result: false, message: resultCopy });
     }
 
+    //// Remove the photo from temp directory ////
     fs.unlinkSync(imagePath);
 }
 

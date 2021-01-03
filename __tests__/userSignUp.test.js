@@ -8,7 +8,7 @@ const UserModel = require('../src/db/models/user');
 const app = buildApp();
 
 describe('sign-up', () => {
-    // This will be runned before all tests.
+
     beforeEach(async () => {
         await createConnection();
         await UserModel.deleteMany()
@@ -38,6 +38,7 @@ describe('sign-up', () => {
             "data": {
                 "favorite": [],
                 "firstname": "toto",
+                "email": 'toto@gmail.com',
                 "name": "L'Asticot",
                 "status": "fan",
                 "token": expect.any(String),
@@ -152,4 +153,3 @@ describe('sign-up', () => {
         expect(userFromDb.length).toStrictEqual(1);
     })
 });
-

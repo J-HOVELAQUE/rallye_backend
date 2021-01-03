@@ -1,4 +1,3 @@
-
 function home(req, res) {
 
     res.json({
